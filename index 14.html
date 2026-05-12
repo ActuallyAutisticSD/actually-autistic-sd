@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Actually Autistic SD — Peer-Led Community for Autistic Adults in San Diego</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap');
+
+  :root {
+    --bg:        #0a1525;
+    --bg2:       #0e1f35;
+    --surface:   #0d1e30;
+    --surface2:  #102538;
+    --border:    rgba(80,130,180,0.3);
+    --border2:   rgba(155,123,184,0.2);
+    --forest:    #0e2240;
+    --gold:      #c9953a;
+    --gold2:     #e8bf70;
+    --lavender:  #9b7bb8;
+    --rose:      #c9a0b0;
+    --cream:     #f5ead8;
+    --muted:     #b8a88a;
+    --teal:      #162e5a;
+    --radius:    16px;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: #0a1525;
+    background: linear-gradient(180deg,
+      #080f1a 0%,
+      #0a1525 20%,
+      #0c1a2e 40%,
+      #0c1a2e 60%,
+      #0a1525 80%,
+      #080f1a 100%
+    );
+    background-attachment: fixed;
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* STARS */
+  #stars { position:fixed; inset:0; pointer-events:none; z-index:0; }
+  .star { position:absolute; border-radius:50%; animation:twinkle var(--d,3s) ease-in-out infinite alternate; }
+  @keyframes twinkle { from{opacity:.08} to{opacity:.65} }
+
+  /* BOTANICAL SVG DECORATIONS */
+  .botanical-divider {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--gold);
+    opacity: 0.6;
+    letter-spacing: .5em;
+    margin: .5rem 0;
+  }
+
+  /* SKIP */
+  .skip { position:absolute; top:-60px; left:1rem; background:var(--gold); color:#000; padding:.5rem 1rem; border-radius:8px; font-weight:500; z-index:9999; transition:top .2s; }
+  .skip:focus { top:1rem; }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:200;
+    height: 64px;
+    background: rgba(11,21,16,0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: .88rem;
+    letter-spacing: .12em;
+    background: linear-gradient(90deg, var(--gold2), var(--lavender), var(--gold2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    white-space: nowrap;
+  }
+  .nav-links { display:flex; gap:.2rem; list-style:none; }
+  .nav-links a {
+    display:block; padding:.45rem .8rem; border-radius:8px;
+    color: var(--muted); font-size:.82rem; font-weight:400; letter-spacing:.04em;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover { color:var(--cream); background:rgba(245,234,210,.07); }
+  .nav-links .ml a {
+    background: linear-gradient(135deg, var(--forest), #2a5a3a);
+    border: 1px solid var(--border);
+    color: var(--gold2) !important;
+    -webkit-text-fill-color: var(--gold2) !important;
+    border-radius: 50px;
+    padding: .45rem 1.1rem;
+    font-family: 'Cinzel', serif;
+    font-size: .75rem;
+    letter-spacing: .1em;
+  }
+
+  /* HAMBURGER */
+  .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
+  .hamburger span { display:block; width:22px; height:1.5px; background:var(--gold); border-radius:2px; transition:.3s; }
+  .mob-nav { display:none; flex-direction:column; position:fixed; top:64px; left:0; right:0; background:rgba(8,15,26,.98); border-bottom:1px solid var(--border); padding:1rem 1.5rem; gap:.2rem; z-index:199; }
+  .mob-nav.open { display:flex; }
+  .mob-nav a { display:block; padding:.75rem 1rem; color:var(--muted); font-size:.95rem; border-radius:10px; transition:background .2s; }
+  .mob-nav a:hover { background:rgba(245,234,210,.07); color:var(--cream); }
+  .mob-nav .mm { background:linear-gradient(135deg,var(--forest),#162e5a); border:1px solid var(--border); color:var(--gold2) !important; -webkit-text-fill-color:var(--gold2) !important; margin-top:.3rem; font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.1em; }
+
+  main { position:relative; z-index:1; }
+  .section { max-width:860px; margin:0 auto; padding:5rem 1.5rem; }
+  .divider {
+    max-width:860px; margin:0 auto;
+    display:flex; align-items:center; gap:1rem;
+    padding:.5rem 1.5rem;
+    color:var(--gold); opacity:.45; font-size:.8rem; letter-spacing:.4em;
+  }
+  .divider::before, .divider::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(201,149,58,.35),transparent); }
+
+  /* LABELS */
+  .label { display:inline-block; font-family:'Cinzel',serif; font-size:.68rem; font-weight:500; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:.7rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.7rem,4vw,2.4rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+    color: var(--cream);
+    letter-spacing: .03em;
+  }
+  h2 em {
+    font-style: normal;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    background: linear-gradient(90deg, var(--gold2), var(--lavender));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .body { color:var(--muted); font-size:1rem; margin-bottom:1rem; font-weight:300; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align: center; padding: 7rem 1.5rem 4rem;
+    position: relative; width: 100%;
+  }
+  .hero-glow {
+    position:absolute; width:600px; height:600px;
+    background:radial-gradient(circle, rgba(14,34,64,.6) 0%, transparent 70%);
+    top:50%; left:50%; transform:translate(-50%,-50%);
+    pointer-events:none;
+    animation: breathe 8s ease-in-out infinite alternate;
+  }
+  @keyframes breathe { from{transform:translate(-50%,-50%) scale(1)} to{transform:translate(-50%,-50%) scale(1.15)} }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem,7vw,4.2rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: .06em;
+    background: linear-gradient(160deg, var(--cream) 0%, var(--gold2) 45%, var(--lavender) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: .4rem; width:100%;
+  }
+  .hero-city {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem,3.5vw,2rem);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: .18em;
+    color: var(--gold);
+    margin-bottom: 1rem; width:100%;
+  }
+  .hero-tag { font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.35em; text-transform:uppercase; color:var(--lavender); margin-bottom:1.3rem; }
+  .hero-desc { max-width:520px; font-size:1rem; color:var(--muted); margin-bottom:2.5rem; font-weight:300; line-height:1.8; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+
+  /* BUTTONS */
+  .btn {
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.85rem 1.8rem; border-radius:4px;
+    font-family: 'Cinzel', serif; font-size:.78rem; font-weight:500;
+    cursor:pointer; border:none; letter-spacing:.1em; text-transform:uppercase;
+    transition:transform .2s, box-shadow .2s;
+  }
+  .btn:hover { transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,.5); }
+  .btn-primary { background:linear-gradient(135deg,#0e2240,#162e5a); color:var(--gold2); border:1px solid var(--border); }
+  .btn-ghost { background:transparent; border:1px solid rgba(201,149,58,.4); color:var(--gold); }
+  .btn-ghost:hover { border-color:var(--gold2); color:var(--gold2); }
+
+  /* PILLARS */
+  .pillars { display:grid; grid-template-columns:repeat(auto-fit,minmax(185px,1fr)); gap:1.2rem; margin-top:2rem; }
+  .pillar {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:1.5rem;
+    transition:border-color .3s, transform .3s, background .3s;
+    position:relative; overflow:hidden;
+  }
+  .pillar::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(201,149,58,.04),transparent); pointer-events:none; }
+  .pillar:hover { border-color:rgba(201,149,58,.5); transform:translateY(-4px); background:rgba(100,150,200,0.13); }
+  .pillar-icon { font-size:1.7rem; margin-bottom:.5rem; }
+  .pillar h3 { font-family:'Cinzel',serif; font-size:.82rem; font-weight:500; letter-spacing:.08em; color:var(--cream); margin-bottom:.35rem; }
+  .pillar p { font-size:.87rem; color:var(--muted); font-weight:300; }
+
+  /* STORY CARD */
+  .story-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:20px; padding:2.2rem; margin-top:1.5rem;
+    position:relative; overflow:hidden;
+  }
+  .story-card::before { content:'✦'; position:absolute; top:1.5rem; right:1.8rem; font-size:1rem; color:var(--gold); opacity:.3; }
+  .story-card p { color:var(--muted); margin-bottom:1rem; font-size:1rem; font-weight:300; }
+  .story-card p:last-child { margin-bottom:0; }
+  .accent { color:var(--gold2); font-style:italic; font-family:'Cormorant Garamond',serif; font-size:1.1rem; }
+  .story-tagline { margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid var(--border); font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.15em; color:var(--gold); }
+
+  /* CONNECT */
+  .connect-note { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.3rem 1.6rem; margin-bottom:1.5rem; display:flex; gap:1rem; align-items:flex-start; }
+  .connect-note-icon { font-size:1.6rem; flex-shrink:0; }
+  .connect-note p { color:var(--muted); font-size:.94rem; margin:0; font-weight:300; }
+  .connect-note strong { color:var(--cream); font-weight:500; }
+  .connect-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1.2rem; }
+  .c-card { border-radius:var(--radius); padding:1.6rem; display:flex; flex-direction:column; gap:.45rem; transition:transform .25s,box-shadow .25s; border:1px solid rgba(255,255,255,.08); }
+  .c-card:hover { transform:translateY(-5px); box-shadow:0 18px 40px rgba(0,0,0,.5); }
+  .c-card.wa { background:linear-gradient(135deg,#075e54,#128c7e); }
+  .c-card.ig { background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); }
+  .c-card.fb { background:linear-gradient(135deg,#1877f2,#0d5fc4); }
+  .c-card.em { background:linear-gradient(135deg,#0e2240,#162e5a); border-color:var(--border); }
+  .c-card .c-icon { font-size:1.9rem; }
+  .c-card h3 { font-family:'Cinzel',serif; font-size:.82rem; font-weight:500; letter-spacing:.1em; color:#fff; }
+  .c-card p { font-size:.87rem; color:rgba(255,255,255,.8); line-height:1.55; flex:1; font-weight:300; }
+  .c-card a.chip { display:inline-flex; align-items:center; gap:.35rem; font-size:.8rem; font-weight:400; color:rgba(255,255,255,.95); background:rgba(0,0,0,.25); padding:.42rem .95rem; border-radius:4px; width:fit-content; margin-top:.2rem; transition:background .2s; font-family:'Cinzel',serif; letter-spacing:.06em; }
+  .c-card a.chip:hover { background:rgba(0,0,0,.4); }
+
+  /* GUIDELINES */
+  .gl-list { display:flex; flex-direction:column; gap:1rem; margin-top:1.5rem; }
+  .gl-item { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.3rem 1.5rem; display:flex; gap:1rem; align-items:flex-start; transition:border-color .25s; }
+  .gl-item:hover { border-color:rgba(201,149,58,.4); }
+  .gl-emoji { font-size:1.3rem; flex-shrink:0; line-height:1.6; }
+  .gl-body h4 { font-family:'Cinzel',serif; font-size:.82rem; font-weight:500; letter-spacing:.08em; color:var(--cream); margin-bottom:.3rem; }
+  .gl-body p { font-size:.9rem; color:var(--muted); font-weight:300; }
+  .gl-body ul { margin-top:.35rem; padding-left:1.1rem; }
+  .gl-body ul li { font-size:.88rem; color:var(--muted); margin-bottom:.18rem; font-weight:300; }
+  .crisis-link { color:var(--gold2); font-weight:500; }
+  .disclaimer-box { margin-top:1.5rem; background:#0d1e30; border:1px solid rgba(80,130,180,0.3); border-radius:var(--radius); padding:1.2rem 1.5rem; }
+  .disclaimer-box p { font-size:.9rem; color:var(--muted); font-weight:300; }
+  .disclaimer-box strong { color:var(--gold2); }
+
+  /* CONTACT */
+  .contact-box { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2.5rem; text-align:center; }
+  .contact-box p { color:var(--muted); margin-bottom:1.5rem; max-width:460px; margin-left:auto; margin-right:auto; font-weight:300; }
+  .contact-email { display:inline-flex; align-items:center; gap:.6rem; background:linear-gradient(135deg,#0e2240,#162e5a); border:1px solid var(--border); color:var(--gold2); padding:.95rem 2rem; border-radius:4px; font-family:'Cinzel',serif; font-size:.78rem; font-weight:500; letter-spacing:.1em; transition:transform .2s,box-shadow .2s; }
+  .contact-email:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.5); }
+
+  /* FOOTER */
+  footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:2.5rem 1.5rem; text-align:center; background:rgba(8,15,26,.6); }
+  .footer-inner { max-width:860px; margin:0 auto; }
+  .footer-logo { font-family:'Cinzel',serif; font-size:1.1rem; font-weight:700; letter-spacing:.15em; background:linear-gradient(90deg,var(--gold2),var(--lavender),var(--gold2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.4rem; }
+  .footer-tag { font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold); font-size:.95rem; margin-bottom:1rem; letter-spacing:.05em; }
+  .footer-links { display:flex; flex-wrap:wrap; gap:.8rem; justify-content:center; margin-bottom:1rem; }
+  .footer-links a { color:var(--muted); font-size:.82rem; transition:color .2s; letter-spacing:.04em; }
+  .footer-links a:hover { color:var(--gold2); }
+  .footer-note { font-size:.75rem; color:rgba(184,168,138,.3); margin-top:.5rem; }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease,transform .55s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* PASSWORD */
+  .pw-input { width:100%; padding:12px 18px; border-radius:4px; border:1px solid var(--border); background:rgba(245,234,210,.05); color:var(--cream); font-size:.95rem; margin-bottom:10px; outline:none; font-family:'Jost',sans-serif; letter-spacing:.06em; transition:border-color .2s; }
+  .pw-input:focus { border-color:var(--gold); }
+  .pw-input::placeholder { color:rgba(245,234,210,.25); }
+
+  /* MEMBER CARDS */
+  .member-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.2rem 1.3rem; display:flex; gap:1rem; align-items:flex-start; transition:border-color .25s; }
+  .member-card:hover { border-color:rgba(201,149,58,.4); }
+  .member-card.hidden { display:none; }
+  .mc-avatar { width:58px; height:58px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:1.3rem; font-weight:700; color:var(--cream); overflow:hidden; border:1px solid var(--border); }
+  .mc-avatar img { width:100%; height:100%; object-fit:cover; }
+  .mc-info { flex:1; min-width:0; }
+  .mc-top { display:flex; align-items:flex-start; justify-content:space-between; gap:.8rem; flex-wrap:wrap; margin-bottom:.35rem; }
+  .mc-name { font-family:'Cinzel',serif; font-size:.9rem; font-weight:600; letter-spacing:.06em; color:var(--cream); display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .mc-founder { font-size:.65rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); background:rgba(201,149,58,.12); padding:2px 8px; border-radius:4px; }
+  .mc-pronouns { font-size:.82rem; color:var(--muted); margin-top:2px; font-weight:300; }
+  .mc-contact { display:flex; gap:.5rem; flex-wrap:wrap; }
+  .mc-btn { font-size:.76rem; font-weight:400; padding:5px 12px; border-radius:4px; background:rgba(201,149,58,.1); color:var(--gold2); border:1px solid rgba(80,130,180,0.3); white-space:nowrap; transition:background .2s; font-family:'Cinzel',serif; letter-spacing:.06em; cursor:default; }
+  .mc-btn:hover { background:rgba(201,149,58,.2); }
+  .mc-bio { font-size:.88rem; color:var(--muted); line-height:1.7; margin-bottom:.7rem; font-weight:300; }
+  .mc-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+  .mc-tag { font-size:.72rem; padding:3px 10px; border-radius:4px; background:rgba(155,123,184,.1); border:1px solid rgba(155,123,184,.25); color:var(--lavender); font-family:'Cinzel',serif; letter-spacing:.05em; }
+
+  /* FILTER BUTTONS */
+  .filter-btn { font-size:.72rem; padding:6px 14px; border-radius:4px; border:1px solid rgba(80,130,180,0.3); background:rgba(245,234,210,.04); color:var(--muted); cursor:pointer; font-family:'Cinzel',serif; letter-spacing:.06em; transition:all .2s; }
+  .filter-btn:hover { background:rgba(201,149,58,.1); color:var(--gold2); border-color:rgba(201,149,58,.4); }
+  .filter-btn.active { background:linear-gradient(135deg,#0e2240,#162e5a); color:var(--gold2); border-color:var(--border); }
+
+  /* SUBSCRIBE */
+  .ml-embedded input { border-radius:4px !important; }
+  .ml-embedded button { border-radius:4px !important; background:linear-gradient(135deg,#0e2240,#162e5a) !important; font-family:'Cinzel',serif !important; letter-spacing:.1em !important; }
+
+  @media(max-width:700px){
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .section{padding:3.5rem 1.2rem;}
+    .hero{padding:6rem 1.2rem 3rem;}
+    .connect-grid{grid-template-columns:1fr;}
+    .pillars{grid-template-columns:1fr 1fr;}
+    .mc-top{flex-direction:column;gap:.4rem;}
+    .mc-avatar{width:46px;height:46px;font-size:1rem;}
+  }
+  @media(max-width:400px){.pillars{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to main content</a>
+<div id="stars" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <div class="nav-logo" style="display:flex;align-items:center;gap:10px;">
+    <img src="./Logo.png" alt="Actually Autistic SD logo" style="width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(201,149,58,.4);object-fit:cover;"/>
+    <span>Actually Autistic SD</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#connect">Join Us</a></li>
+    <li><a href="#subscribe">Subscribe</a></li>
+    <li><a href="#guidelines">Guidelines</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#members-access" style="background:linear-gradient(135deg,#6A0DAD,#e87cf3);color:#fff;border-radius:50px;padding:.45rem 1rem;font-size:.85rem;font-weight:500;-webkit-text-fill-color:#fff;">🔒 Members</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu(this)">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<nav class="mob-nav" id="mobNav" aria-label="Mobile navigation">
+  <a href="#about"      onclick="closeMenu()">About</a>
+  <a href="#story"      onclick="closeMenu()">Our Story</a>
+  <a href="#connect"    onclick="closeMenu()">Join Us</a>
+  <a href="#subscribe"  onclick="closeMenu()">Subscribe</a>
+  <a href="#guidelines" onclick="closeMenu()">Guidelines</a>
+  <a href="#contact"    onclick="closeMenu()">Contact</a>
+  <a href="#members-access" onclick="closeMenu()" style="background:linear-gradient(135deg,#6A0DAD,#e87cf3);color:#fff;-webkit-text-fill-color:#fff;border-radius:10px;margin-top:.3rem;">🔒 Members Only Access</a>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Welcome">
+    <div class="hero-glow" aria-hidden="true"></div>
+
+    <div style="width:100%;max-width:980px;margin:0 auto 2.5rem;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.6);border:1px solid rgba(80,130,180,0.3);">
+    <img src="./Banner.png" alt="Actually Autistic SD community banner" style="width:100%;display:block;"/>
+  </div>
+    <div class="hero-city">San Diego</div>
+    <p class="hero-tag">By Autistics &nbsp;·&nbsp; For Autistics &nbsp;·&nbsp; Always</p>
+    <p class="hero-desc">A peer-led, grassroots community for autistic adults in San Diego. Virtual &amp; IRL meetups. Just us showing up for each other. 💜</p>
+    <div class="hero-btns">
+      <a href="#connect"    class="btn btn-primary">💬 Join the Community</a>
+      <a href="#story"      class="btn btn-ghost">Our Story</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" aria-labelledby="h-about">
+    <p class="label">Who We Are</p>
+    <h2 id="h-about">A space that is <em>truly ours</em></h2>
+    <p class="body">Actually Autistic SD is a peer-led community for autistic adults in San Diego. Grassroots, independent, and completely community driven. Built together, led with care.</p>
+    <p class="body">We are not a professional organization, a clinical service, or affiliated with any autism nonprofit. We are simply autistic people who wanted a space that truly belongs to us.</p>
+    <p class="body">Founded in the spring of 2026, we are a growing and evolving community. We are just getting started and we are so glad you are here. 💜</p>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-icon">♾️</div>
+        <h3>Autistic-Led</h3>
+        <p>Founded and organized by an autistic adult, for autistic adults. Always.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon">🤝</div>
+        <h3>Peer Support</h3>
+        <p>Real connection from people who actually live it — no clinical vibes, just community.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon">🛡️</div>
+        <h3>Safety First</h3>
+        <p>Safety, respect, and accountability are always the priority here.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon">📍</div>
+        <h3>SD &amp; Virtual</h3>
+        <p>In-person meetups around San Diego plus virtual Zoom hangouts — come as you are.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STORY -->
+  <section class="section" id="story" aria-labelledby="h-story">
+    <p class="label">Our Story</p>
+    <h2 id="h-story">Why I <em>created this</em></h2>
+    <div class="story-card reveal">
+      <p>Welcome to Actually Autistic SD 💜♾️</p>
+      <p>After so much love and encouragement from my autistic peers, I built the space they kept telling me I was meant to create. My friends believed in me before I fully believed in myself. They kept saying <span class="accent">"you should just do it"</span> and eventually I listened.</p>
+      <p>This is a peer-led community for autistic adults in San Diego. Grassroots, independent and completely community driven. Built together, led with care. I bring warmth, deep attention to detail, and a genuine passion for making sure every person here feels seen and safe. Autistic voices are the foundation of everything we do here, and as founder and organizer I make sure that safety, respect, and accountability are always the priority — because that matters deeply to us.</p>
+      <p>Just us showing up for each other 💛</p>
+      <p>Virtual &amp; IRL meetups across San Diego.</p>
+      <p class="story-tagline">By autistics, for autistics. Always. 🌈♾️</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONNECT / JOIN US -->
+  <section class="section" id="connect" aria-labelledby="h-connect">
+    <p class="label">Join Us</p>
+    <h2 id="h-connect">Find your <em>people</em></h2>
+    <div class="connect-note reveal">
+      <div class="connect-note-icon">💬</div>
+      <p><strong>Want to join our WhatsApp group?</strong> Email us to inquire about joining. It's our main hub for day-to-day socializing, announcements, meetup ideas, and community chat. You can also email us to submit ideas for meetups, topics of discussion, or any other questions.</p>
+    </div>
+
+    <div class="connect-grid">
+      <div class="c-card wa reveal">
+        <div class="c-icon">💬</div>
+        <h3>WhatsApp Group</h3>
+        <p>Our main community space for socializing, announcements, and brainstorming together. Email us to get added!</p>
+        <a href="mailto:ActuallyAutisticSD@gmail.com?subject=WhatsApp%20Group%20Inquiry" class="chip">✉️ Inquire to Join</a>
+      </div>
+      <div class="c-card ig reveal">
+        <div class="c-icon">📸</div>
+        <h3>Instagram</h3>
+        <p>Follow us for updates, meetup announcements, and community love. @ActuallyAutisticSD</p>
+        <a href="https://www.instagram.com/actuallyautisticsd" target="_blank" rel="noopener" class="chip">↗ Follow Us</a>
+      </div>
+      <div class="c-card fb reveal">
+        <div class="c-icon">👥</div>
+        <h3>Facebook</h3>
+        <p>Join our Facebook community for events, discussion, and connection with autistic adults in SD.</p>
+        <a href="https://www.facebook.com/profile.php?id=61566241268944" target="_blank" rel="noopener" class="chip">↗ Find Us on Facebook</a>
+      </div>
+      <div class="c-card reveal" style="background:linear-gradient(135deg,#010101,#2a2a2a);">
+        <div class="c-icon">🎵</div>
+        <h3>TikTok</h3>
+        <p>Follow us on TikTok for community content, meetup previews and autistic life in San Diego.</p>
+        <a href="https://www.tiktok.com/@actuallyautisticsd" target="_blank" rel="noopener" class="chip">↗ Follow on TikTok</a>
+      </div>
+      <div class="c-card reveal" style="background:linear-gradient(135deg,#cc0000,#ff0000);">
+        <div class="c-icon">▶️</div>
+        <h3>YouTube</h3>
+        <p>Subscribe to our YouTube channel for community videos, meetup recaps and more.</p>
+        <a href="https://www.youtube.com/@actuallyautisticsd" target="_blank" rel="noopener" class="chip">↗ Subscribe on YouTube</a>
+      </div>
+      <div class="c-card em reveal">
+        <div class="c-icon">✉️</div>
+        <h3>Email Us</h3>
+        <p>Questions, meetup ideas, WhatsApp inquiries, or just want to say hi — we'd love to hear from you.</p>
+        <a href="mailto:ActuallyAutisticSD@gmail.com" class="chip">✉️ ActuallyAutisticSD@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="divider"></div>
+
+  <!-- SUBSCRIBE BANNER -->
+  <section id="subscribe" style="max-width:860px; margin:0 auto; padding:3rem 1.5rem;">
+    <div style="
+      background: linear-gradient(135deg, #1e0440, #2a0855, #1a0440);
+      border: 1px solid rgba(247,201,72,0.3);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    ">
+      <div style="position:absolute; width:300px; height:300px; background:radial-gradient(circle, rgba(232,124,243,0.15) 0%, transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none;"></div>
+      <p style="font-size:.72rem; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem;">Stay Connected</p>
+      <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3.5vw,2.2rem); font-weight:700; color:#fff; margin-bottom:.6rem; position:relative;">
+        Join our <em style="font-style:normal; background:linear-gradient(90deg,var(--pink),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">mailing list</em> 💌
+      </h2>
+      <p style="font-size:.95rem; color:var(--muted); max-width:460px; margin:0 auto 1.8rem; position:relative; line-height:1.7;">
+        Get meetup announcements, community updates and news straight to your inbox. No spam. Just us. 💜
+      </p>
+      <script>
+        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '2288033');
+      </script>
+      <div style="position:relative; max-width:440px; margin:0 auto;">
+        <div class="ml-embedded" data-form="Vc2QcB"></div>
+      </div>
+      <p style="font-size:.75rem; color:#5a4a6a; margin-top:1rem; position:relative;">
+        By signing up you agree to receive emails from Actually Autistic SD. Unsubscribe anytime. 💙
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- GUIDELINES -->
+  <section class="section" id="guidelines" aria-labelledby="h-guidelines">
+    <p class="label">Community Guidelines</p>
+    <h2 id="h-guidelines">Our <em>shared values</em></h2>
+    <p class="body">By participating in Actually Autistic SD, online or in person, you agree to these guidelines. They exist to keep our space safe, warm, and truly ours.</p>
+
+    <div class="gl-list">
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">💜</span>
+        <div class="gl-body">
+          <h4>1. This is a Peer Support Space</h4>
+          <p>Actually Autistic SD is a peer-led community run by and for autistic adults. We are not a licensed or professional service of any kind. We do not provide therapy, diagnosis, or clinical support. Nothing shared here should be taken as medical, legal, or mental health advice.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">🌈</span>
+        <div class="gl-body">
+          <h4>2. Autistic Identity</h4>
+          <p>This space is for autistic adults. Formally diagnosed, self-diagnosed, or questioning. All are welcome. We do not require proof of diagnosis and we do not gatekeep autistic identity.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">🛡️</span>
+        <div class="gl-body">
+          <h4>3. Safety &amp; Respect — Zero Tolerance</h4>
+          <p>We have a zero tolerance policy for:</p>
+          <ul>
+            <li>Harassment, bullying, or discrimination of any kind</li>
+            <li>Racism, sexism, homophobia, transphobia, or ableism</li>
+            <li>Sexual harassment or inappropriate behavior</li>
+            <li>Sharing anyone's personal information without consent</li>
+            <li>Screenshots or sharing anything outside the group</li>
+          </ul>
+          <p style="margin-top:.5rem;">Violations will result in immediate removal from the group.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">📵</span>
+        <div class="gl-body">
+          <h4>4. Privacy &amp; Confidentiality</h4>
+          <p>What is shared here stays here. Please respect the privacy of every member. Do not share names, photos, personal details or anything discussed in this space with anyone outside of it. No screenshots — ever.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">🧠</span>
+        <div class="gl-body">
+          <h4>5. Mental Health &amp; Crisis</h4>
+          <p>We care deeply about every member of this community. However we are not equipped to provide crisis support. If you or someone you know is experiencing a mental health emergency please reach out to:</p>
+          <ul>
+            <li>🚨 <span class="crisis-link">988</span> — Suicide &amp; Crisis Lifeline (call or text)</li>
+            <li>🚨 <span class="crisis-link">911</span> — Emergency services</li>
+            <li>🏥 Your nearest emergency room</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">📍</span>
+        <div class="gl-body">
+          <h4>6. In-Person Meetups</h4>
+          <p>All IRL meetups are held in public spaces for the safety of all members. Actually Autistic SD is not responsible for any incidents that occur before, during, or after meetups. Attendance is voluntary and at your own risk.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">💬</span>
+        <div class="gl-body">
+          <h4>7. Communication &amp; Tone</h4>
+          <p>We are all here because we get it. Please extend the same grace to others that you would want extended to you. This is a judgment free zone. Healthy disagreement is welcome, but please keep all communication kind and respectful.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">🚫</span>
+        <div class="gl-body">
+          <h4>8. No Soliciting</h4>
+          <p>Please do not use this space to promote, sell, or advertise products, services, or other groups without prior approval from the founder and organizer.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">📝</span>
+        <div class="gl-body">
+          <h4>9. Admin &amp; Moderation</h4>
+          <p>Actually Autistic SD is founded and organized by an autistic adult in San Diego. As organizer I have the final say on all matters related to safety, membership and community decisions. Depending on the situation, I will consult other admins, organizers and/or members. This is to ensure the safety and wellbeing of all members always.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal">
+        <span class="gl-emoji">📋</span>
+        <div class="gl-body">
+          <h4>10. Disclaimer</h4>
+          <p>Actually Autistic SD is a peer support community and is not a licensed or professional service of any kind. We do not provide therapy, diagnosis or clinical support of any kind. Participation is voluntary and at your own risk.</p>
+        </div>
+      </div>
+
+      <div class="gl-item reveal"><span class="gl-emoji">🔍</span><div class="gl-body"><h4>11. Member Authenticity &amp; Vetting</h4>
+        <p>Actually Autistic SD is a real, peer-led community built on genuine human connection. While we deeply respect every member's privacy and right to share only what they feel comfortable sharing, AI-generated profiles, fake identities, and bot accounts will not be tolerated.</p>
+        <p style="margin-top:.5rem;">Members are welcome to use nicknames or go by a name they feel comfortable with. However, as founder and organizer, I must be able to verify that every member is a real person in order to maintain the safety and integrity of our community. This is not about surveillance. It is about ensuring that every person in this space is who they say they are, so that all of our members can feel genuinely safe.</p>
+        <p style="margin-top:.5rem;">If there is ever reason to question the authenticity of a member, the organizer reserves the right to ask clarifying questions or remove the account from the community. This will always be handled with care and discretion.</p>
+        <p style="margin-top:.5rem;">Our community is by us and for us and that means real autistic humans only. 💜</p>
+      </div></div>
+
+    </div>
+
+    <div class="disclaimer-box reveal">
+      <p>These guidelines may be updated at any time as our community grows and evolves. While we will do our best to notify members of any changes via the WhatsApp Announcements channel, it is ultimately <strong>each member's responsibility</strong> to review these guidelines regularly. Actually Autistic SD is not responsible if a member misses an update. Your continued participation means you agree to the most current version of these guidelines — so please check back often! 💜</p>
+      <p style="margin-top:0.8rem; text-align:center;">Thank you for helping make this space truly ours 💜♾️</p>
+      <p style="margin-top:0.4rem; text-align:center; font-weight:500; color:var(--lavender);">By autistics, for autistics. Always. 🌈</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact" aria-labelledby="h-contact">
+    <p class="label">Get In Touch</p>
+    <h2 id="h-contact">We'd love to <em>hear from you</em></h2>
+    <div class="contact-box reveal">
+      <p>Questions, meetup ideas, WhatsApp inquiries, or just want to say hi. Reach out anytime. We appreciate clear and direct communication. 💜</p>
+      <a href="mailto:ActuallyAutisticSD@gmail.com" class="contact-email">✉️ ActuallyAutisticSD@gmail.com</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MEMBERS ACCESS -->
+  <section class="section" id="members-access" aria-labelledby="h-members">
+    <p class="label">Members Only</p>
+    <h2 id="h-members">Members <em>Only Access</em> 🔒</h2>
+    <p class="body">This space is for Actually Autistic SD members. Access our community skills, resources, and member directory.</p>
+
+    <!-- PASSWORD GATE -->
+    <div id="mem-gate" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3rem 2rem;text-align:center;margin-top:1.5rem;">
+      <div style="font-size:3rem;margin-bottom:1.2rem;">♾️</div>
+      <div style="max-width:340px;margin:0 auto;">
+        <input type="password" id="mem-pw-index" placeholder="Enter member password"
+          style="width:100%;padding:13px 18px;border-radius:50px;border:1.5px solid var(--border);background:rgba(255,255,255,.06);color:var(--white);font-size:.95rem;margin-bottom:12px;outline:none;font-family:'DM Sans',sans-serif;letter-spacing:.06em;"
+          onkeydown="if(event.key==='Enter')checkMembers()"/>
+        <button onclick="checkMembers()"
+          style="display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.95rem 1.8rem;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;border:none;background:linear-gradient(135deg,var(--violet),var(--pink));color:#fff;transition:transform .2s,box-shadow .2s;"
+          onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 28px rgba(0,0,0,.4)'"
+          onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+          🔒 Enter Members Area
+        </button>
+        <p id="mem-error-index" style="display:none;margin-top:12px;font-size:.88rem;color:#ff6b6b;">Hmm, that's not right. Check with the group chat! 💜</p>
+      </div>
+      <p style="margin-top:1.2rem;font-size:.82rem;color:rgba(255,255,255,.25);">Need the password? Ask in the WhatsApp group. 💬</p>
+    </div>
+
+    <!-- MEMBERS CONTENT — hidden until password entered -->
+    <div id="mem-content" style="display:none;margin-top:2rem;">
+
+      <!-- welcome bar -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.9rem 1.3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:2rem;">
+        <p style="margin:0;color:var(--lavender);font-size:.92rem;">🔓 Welcome, member! What's shared here stays here. 💜</p>
+        <button onclick="lockMembers()" style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--muted);font-size:.8rem;padding:5px 14px;border-radius:50px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">Lock 🔒</button>
+      </div>
+
+      <!-- disclaimer -->
+      <div class="disclaimer-box" style="margin-bottom:2rem;">
+        <p style="font-size:.72rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;">⚠️ Important Disclaimer</p>
+        <p><strong>Actually Autistic SD is a peer support community and is not a licensed or professional service of any kind.</strong> We do not provide therapy, diagnosis, medical advice, legal advice, or clinical support of any kind.</p>
+        <p style="margin-top:.6rem;">The community skills, interests and resources listed here are for <strong>peer connection and community support only.</strong> Always consult a qualified licensed professional for medical, legal, mental health, or financial matters.</p>
+        <p style="margin-top:.6rem;"><strong>Actually Autistic SD, its founder, and its members are not liable</strong> for any outcomes resulting from peer connections or resources shared within this community. Participation is voluntary and at your own risk.</p>
+      </div>
+
+      <div style="height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:2rem 0;"></div>
+
+      <!-- member directory -->
+      <p class="label" style="margin-bottom:.3rem;">Community Space</p>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1.2;margin-bottom:.6rem;">Our <em style="font-style:normal;background:linear-gradient(90deg,var(--pink),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Community Members</em></h3>
+      <p class="body">This is your private members area. Here you can see who's in our community, what everyone is interested in, and connect with each other. Connect through the WhatsApp group or use the optional contact info below. Be kind, be respectful, be us. 💜</p>
+      <p class="body">Click on a category below to find members with that interest — or hit <strong style="color:var(--lavender);">All Members</strong> to reset and see everyone. 🌱</p>
+
+      <div style="background:rgba(122,243,232,.06);border:1px solid rgba(122,243,232,.2);border-radius:var(--radius);padding:1rem 1.3rem;margin-bottom:1.5rem;display:flex;gap:.8rem;align-items:flex-start;">
+        <span style="font-size:1.2rem;flex-shrink:0;">🔒</span>
+        <p style="color:var(--muted);font-size:.88rem;margin:0;">This directory is for members only. Contact info is optional and shared by each member's own choice. Please respect everyone's privacy. No screenshots ever. 💜</p>
+      </div>
+
+      <!-- filter bar -->
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem;">
+        <button class="filter-btn active" onclick="filterMembers(this,'all')">All Members</button>
+        <button class="filter-btn" onclick="filterMembers(this,'music')">🎵 Music</button>
+        <button class="filter-btn" onclick="filterMembers(this,'technology')">💻 Technology</button>
+        <button class="filter-btn" onclick="filterMembers(this,'gaming')">🎮 Gaming</button>
+        <button class="filter-btn" onclick="filterMembers(this,'research')">📚 Research + Writing</button>
+        <button class="filter-btn" onclick="filterMembers(this,'wellness')">🌿 Wellness + Self Care</button>
+        <button class="filter-btn" onclick="filterMembers(this,'art')">🎨 Art + Creative</button>
+        <button class="filter-btn" onclick="filterMembers(this,'education')">🏫 Education</button>
+        <button class="filter-btn" onclick="filterMembers(this,'career')">💼 Work + Career</button>
+        <button class="filter-btn" onclick="filterMembers(this,'neurodivergent')">🧠 Neurodivergent Life</button>
+        <button class="filter-btn" onclick="filterMembers(this,'sandiego')">📍 San Diego + Local</button>
+        <button class="filter-btn" onclick="filterMembers(this,'food')">🍳 Food + Cooking</button>
+        <button class="filter-btn" onclick="filterMembers(this,'peersupport')">💬 Peer Support</button>
+        <button class="filter-btn" onclick="filterMembers(this,'community')">♾️ Community Building</button>
+        <button class="filter-btn" onclick="filterMembers(this,'animals')">🐾 Animal Knowledge</button>
+        <button class="filter-btn" onclick="filterMembers(this,'caregiving')">🧑🏽‍🍼 Caregiving/Parenting</button>
+        <button class="filter-btn" onclick="filterMembers(this,'advocacy')">✊🏽 Advocacy</button>
+        <button class="filter-btn" onclick="filterMembers(this,'hangouts')">🧑🏽‍🤝‍🧑🏽 Random Hangouts</button>
+        <button class="filter-btn" onclick="filterMembers(this,'sports')">🏃🏽 Sports + Fitness</button>
+        <button class="filter-btn" onclick="filterMembers(this,'diy')">🔧 DIY + Handy Person</button>
+      </div>
+
+      <!-- member list -->
+      <div style="display:flex;flex-direction:column;gap:1rem;" id="member-list">
+        <div id="no-results" style="display:none;text-align:center;color:var(--muted);font-size:.95rem;padding:2rem;">No members found for this category yet. 🌱</div>
+
+        <!-- LILY -->
+        <div class="member-card" data-tags="peersupport wellness neurodivergent sandiego art music research education career food technology gaming community animals caregiving advocacy diy">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#6A0DAD,#e87cf3);"><span>L</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Lily <span class="mc-founder">Founder ♾️</span> <span style="font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#7af3e8;background:rgba(122,243,232,.12);padding:2px 8px;border-radius:100px;">Admin</span></div>
+                <div class="mc-pronouns">she/her &nbsp;·&nbsp; mixed-indigenous &nbsp;·&nbsp; 40</div>
+              </div>
+              <div class="mc-contact">
+                <a href="https://wa.me/16197939290" target="_blank" class="mc-btn">💬 WhatsApp</a>
+                <a href="mailto:ActuallyAutisticSD@gmail.com" class="mc-btn">✉️ Email</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Late diagnosed autistic + ADHD. San Diego native. Built this community because we needed it. A true jack of all trades with a wide range of knowledge and skills. Strong social skills, deep listener, and natural connector — great at helping others learn to socialize, prepare for social situations, and build genuine friendships. Highly analytical, outside-the-box thinker and problem solver. I prefer texting — reach out via WhatsApp in the group! 💜
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Art & Creative:</strong> Concert photography published on NBC & Kerrang! Magazine twice. Freelance artwork. Watercolor & gel ink painting. Visual art published on a metal/hardcore band record. Featured in a short film by a British filmmaker. DIY artsy projects.
+              <br><br>
+              <strong style="color:var(--lavender);">🎵 Music:</strong> Flute, piccolo, tenor saxophone, guitar, piano, midi keyboard. Songwriting & music writing. Deep appreciation across all genres — hardcore, metal, folk-punk, indie, 80s, hip hop, electronic, jazz, classical, world music, musica latina, Icelandic music. Vinyl/record listening. Live shows & concerts when body allows.
+              <br><br>
+              <strong style="color:var(--lavender);">📚 Research & Writing:</strong> Working on first book. Writing short poems & stories. Deep research across multiple fields.
+              <br><br>
+              <strong style="color:var(--lavender);">🔬 Science & Medicine:</strong> Naturopathic medicine. Eastern philosophy & Osteopathy. Western/Allopathic medicine. Biological-forensic anthropology. Cultural & medical anthropology. Neuroscience & cognitive science. Biocentrism. Gua Sha & holistic healing. Human behavior.
+              <br><br>
+              <strong style="color:var(--lavender);">🧠 Psychology & Social Sciences:</strong> Psychology & sociology. Decolonizing psychology. Socio-economics. Philosophy. Theology & spirituality. Ethnic studies & cultural differences. Deeply interested in how autism presents in women.
+              <br><br>
+              <strong style="color:var(--lavender);">🔍 Search & Rescue:</strong> SAR skills & gear. Helping families find missing & lost loved ones. Psychology & behavior of missing persons.
+              <br><br>
+              <strong style="color:var(--lavender);">🎬 Film & Media:</strong> Independent & foreign films. Documentaries. British romance & Victorian era films. Silent & old black and white films. Mike Flanagan films. Psychological thrillers. Jeopardy.
+              <br><br>
+              <strong style="color:var(--lavender);">🎮 Gaming:</strong> Competitive Tournament Fortnite player — always looking for Fortnite buddies! Hit me up. 🎮
+              <br><br>
+              <strong style="color:var(--lavender);">🎉 Event Planning:</strong> Great at planning and organizing events — from community meetups to larger gatherings.
+              <br><br>
+              <strong style="color:var(--lavender);">🍳 Food & Cooking:</strong> Vegan & vegetarian cooking and baking. Gluten free cooking & baking.
+              <br><br>
+              <strong style="color:var(--lavender);">🌿 Spirituality & Wellness:</strong> Grew up practicing Buddhism. Studying esoteric knowledge & mysticism.<br><br><strong style="color:var(--lavender);">💬 Social Skills & Peer Support:</strong> Helping others learn to socialize and prepare for social situations. Grief support & processing. Deep listening & emotional availability. Building genuine human connection.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Life Skills & Leadership:</strong> Navigating complex chronic illness & disability. Disability advocacy & self-advocacy. Emotional intelligence & grief processing. Community building & human connection. Cultural competency. Social justice advocacy. Organization & leadership. Event planning.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">💼 Work + Career</span>
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">💻 Technology</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">🍳 Food + Cooking</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🧑🏽‍🍼 Caregiving/Parenting</span>
+              <span class="mc-tag">✊🏽 Advocacy</span>
+              <span class="mc-tag">🔧 DIY + Handy Person</span>
+            </div>
+          </div>
+        </div>
+        <!-- JUANMIGUEL -->
+        <div class="member-card" data-tags="music research technology gaming career animals">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#2AAD9B,#7af3e8);"><span>J</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Juanmiguel <span style="font-size:.78rem;font-weight:500;color:var(--muted);">(Lily's Partner)</span></div>
+                <div class="mc-pronouns">he/him &nbsp;·&nbsp; 33</div>
+              </div>
+              <div class="mc-contact">
+                <a href="mailto:Juanmiguel111@gmail.com" class="mc-btn">✉️ Email</a>
+              </div>
+            </div>
+            <div class="mc-bio">Into Hip Hop, Metal, Mustang Cars, Video Games (in moderation), Designing Digital Watch Faces, and Cellphones.</div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">💻 Technology</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">💼 Work + Career</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALEX H -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF6B9D,#e87cf3);"><span>A</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Alex Hayslip <span style="font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#7af3e8;background:rgba(122,243,232,.12);padding:2px 8px;border-radius:100px;">Admin</span></div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- JAYDEN -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#F7C948,#FF7A35);"><span>J</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Jayden <span style="font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#7af3e8;background:rgba(122,243,232,.12);padding:2px 8px;border-radius:100px;">Admin</span></div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- ALEK "DAN" -->
+        <div class="member-card" data-tags="music gaming art research education wellness peersupport community neurodivergent sandiego food technology career sports">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#4ECDC4,#7af3e8);"><span>A</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Alek "Dan"</div>
+                <div class="mc-pronouns">30s</div>
+              </div>
+              <div class="mc-contact">
+                <a href="https://wa.me/14258778358" target="_blank" class="mc-btn">💬 WhatsApp</a>
+                <span class="mc-btn">🎮 Discord: thebarista94</span>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Prefers Discord (thebarista94) or WhatsApp. 💜
+              <br><br>
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> Writing, gaming, coffee and music.
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Hobbies:</strong> Gaming, writing, art, walks and music.
+              <br><br>
+              <strong style="color:var(--lavender);">💼 Life Skills:</strong> Teaching — primarily in math and literature.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">💼 Work + Career</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">🍳 Food + Cooking</span>
+              <span class="mc-tag">🏃🏽 Sports + Fitness</span>
+              <span class="mc-tag">💻 Technology</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALY -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#F7C948,#FF6B9D);"><span>A</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Aly</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!--
+        TO ADD A NEW MEMBER: copy this block, fill in their info
+        data-tags options: peersupport wellness neurodivergent sandiego art music research education career food technology gaming
+
+        <div class="member-card" data-tags="music technology">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF6B9D,#e87cf3);"><span>A</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Name</div>
+                <div class="mc-pronouns">pronouns · age</div>
+              </div>
+              <div class="mc-contact">
+                <a href="mailto:email@example.com" class="mc-btn">✉️ Email</a>
+              </div>
+            </div>
+            <div class="mc-bio">Short bio here.</div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">💻 Technology</span>
+            </div>
+          </div>
+        </div>
+        -->
+
+
+        <!-- ANNIKA -->
+        <div class="member-card" data-tags="technology research sports wellness peersupport sandiego neurodivergent animals career">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#A78BFA,#6A0DAD);"><span>A</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Annika</div>
+                <div class="mc-pronouns">any pronouns &nbsp;·&nbsp; 25</div>
+              </div>
+              <div class="mc-contact">
+                <a href="mailto:annikahettmann@proton.me" class="mc-btn">✉️ Email</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Early diagnosed autistic. SoCal native with Bay Area roots. A lifelong learner with proficient analytical, organizational, communication and problem-solving skills. An appreciative listener who enjoys helping others to the best of my ability. Text and email are my preferred communication methods. 💜
+              <br><br>
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> Retro and modern technology, books, astrology, coffee/tea/boba, sports (NFL/NHL/PWHL/MLB), Transformers.
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Hobbies:</strong> Reading, thrifting, writing, collecting CDs/DVDs, solving crossword & jigsaw puzzles, going on walks and hikes.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Life Skills:</strong> Full-time employment, driver's license, experience caring for pets, some dating experience, managing food allergies and eczema, personal budgeting.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">💻 Technology</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">🏃🏽 Sports + Fitness</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">💼 Work + Career</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BAILEY -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#4ECDC4,#A78BFA);"><span>B</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Bailey</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- BRIDGET -->
+        <div class="member-card" data-tags="art music wellness peersupport community research animals caregiving">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF6B9D,#F7C948);"><span>B</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Bridget</div>
+                <div class="mc-pronouns">she/her</div>
+              </div>
+              <div class="mc-contact">
+                <a href="sms:6199203132" class="mc-btn">💬 Text</a>
+                <a href="mailto:bridgetmcelhaney@yahoo.com" class="mc-btn">✉️ Email</a>
+                <a href="https://instagram.com/humbleyaayaa" target="_blank" class="mc-btn">📸 IG</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Prefers texting to best express herself — avid texter! Occasional calls or voice notes via WhatsApp when needed.
+              <br><br>
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> Spirituality & holistic health. Nature & parks. Meditating. Building meaningful and deep relationships. Eclectic music. Community. Collecting memorable items. Writing. KUSI News & San Diego local community. Collecting bows, stickers & unique books. Preserving memories. Future nomadic travel. Culture & art. Mystic stuff. Cultural anthropology. Styling specific outfits.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Skills:</strong> High level customer service. Caregiving & companionship. Very fast texting. Keen writing skills. Interpersonal skills. Future mentoring. Holistic & spiritual knowledge. Good memory. Loyal to people. Deep knowledge of reggae, punk, soca, ska, doo wop and specific music genres.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🧑🏽‍🍼 Caregiving/Parenting</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHRIS -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#2AAD9B,#4ECDC4);"><span>C</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Chris</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- CIARRA -->
+        <div class="member-card" data-tags="education animals gaming career neurodivergent sandiego peersupport">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#e87cf3,#A78BFA);"><span>C</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Ciarra</div>
+                <div class="mc-pronouns">she/they &nbsp;·&nbsp; 31</div>
+              </div>
+              <div class="mc-contact">
+                <a href="https://instagram.com/cscats" target="_blank" class="mc-btn">📸 IG: cscats</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> Special education teaching, birds, and video games.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Life Skills:</strong> Living independently, holding a full-time job, has a driver's license, dating, and pet care.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">💼 Work + Career</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">💬 Peer Support</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CINTHYIA -->
+        <div class="member-card" data-tags="art education neurodivergent sandiego community animals hangouts wellness research gaming">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF7A35,#F7C948);"><span>C</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Cinthyia</div>
+                <div class="mc-pronouns">she/her/hers &nbsp;·&nbsp; 22</div>
+              </div>
+              <div class="mc-contact">
+                <a href="mailto:cinthyanguerreroc@gmail.com" class="mc-btn">✉️ Email</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Not very active online and prefers to get to know you before sharing socials — reach out via email or phone if you already have her number. 💜
+              <br><br>
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> Books & literature, arts & crafts, movies & TV shows, the fantasy genre, animals & nature, psychology, love & deepspace, astrology/tarot/crystals.
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Hobbies:</strong> Reading, creative journaling, penpaling, coloring, gaming, drawing & painting, going to museums, visiting cafes, hiking (low intensity), helping animals.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Life Skills & Can Help With:</strong> Creative art design, organization, analysis & problem solving, giving feedback. Finishing a Bachelor's degree in psychology. Very familiar with community college to university transfer process.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🧑🏽‍🤝‍🧑🏽 Random Hangouts</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">🎮 Gaming</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAVID -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#6A0DAD,#2AAD9B);"><span>D</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">David</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- ELIZABETH -->
+        <div class="member-card" data-tags="music gaming research neurodivergent sandiego hangouts art education">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF6B9D,#A78BFA);"><span>E</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Elizabeth</div>
+                <div class="mc-pronouns">&nbsp;</div>
+              </div>
+              <div class="mc-contact">
+                <a href="https://wa.me/1" target="_blank" class="mc-btn">💬 WhatsApp</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> Criminology student. Criminology, the 1960s, comic books, the Sherlock Holmes series, pagan lore, theater.
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Hobbies:</strong> Video games, violin, painting, crocheting, dancing.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Skills:</strong> Writing poetry and essays. Really good at shopping and finding good deals.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">🧑🏽‍🤝‍🧑🏽 Random Hangouts</span>
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">🏫 Education</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ELLIS -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF7A35,#7B4FFF);"><span>E</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Ellis</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+
+        <!-- EMI -->
+        <div class="member-card" data-tags="art music wellness peersupport community gaming food neurodivergent animals hangouts sandiego">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF6B9D,#4ECDC4);"><span>E</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Emi</div>
+                <div class="mc-pronouns">she/they &nbsp;·&nbsp; 31 &nbsp;·&nbsp; Mexican American &nbsp;·&nbsp; trans woman · lesbian · queer</div>
+              </div>
+              <div class="mc-contact">
+                <a href="sms:6198699503" class="mc-btn">💬 Text</a>
+                <a href="mailto:zeldafanejp@gmail.com" class="mc-btn">✉️ Email</a>
+                <a href="https://www.instagram.com/the_beautiful_emi?igsh=NTc4MTIwNjQ2YQ==" target="_blank" class="mc-btn">📸 IG</a>
+                <a href="https://www.facebook.com/emilio.penalosa.9?mibextid=wwXIfr" target="_blank" class="mc-btn">👥 FB</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Autistic since childhood — undiagnosed as a teen, professionally diagnosed at 18. A trans woman, lesbian, and queer autistic who is a positive influence to others and always brightens up an event with her smile. San Diego local 📍 who enjoys event planning and bringing people together. Always learning, always listening, and eager to better understand and help people the best way she can. Learning every day how to be a good leader and improve on her leadership skills. 💜
+              <br><br>
+              Likes to text and call but prefers texting — both are fine! Also loves FaceTime. Add her on social media!
+              <br><br>
+              <strong style="color:var(--lavender);">🎬 Film & Media:</strong> Avid filmmaker — screenwriting, lighting, editing, directing, and acting. Loves all types of films including independent and international films (except satanic horror). Deep knowledge of pop culture including books, movies and TV shows.
+              <br><br>
+              <strong style="color:var(--lavender);">🎵 Music:</strong> Loves going to concerts and listening to all types of music genres.
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Art & Creative:</strong> Has taken art classes and is a pretty good drawer. Knows a good amount about art.
+              <br><br>
+              <strong style="color:var(--lavender);">🎮 Pop Culture & Gaming:</strong> Loves the world of pop culture — books, movies, TV shows, celebrities, video games, music and more. Big fan of Wicked and Disney. Really into women's fashion and makeup. Deep knowledge of the pop culture realm.
+              <br><br>
+              <strong style="color:var(--lavender);">🍳 Food & Cooking:</strong> Loves to cook breakfast food — potatoes, eggs, bacon and more. Makes a mean mac and cheese with chili.
+              <br><br>
+              <strong style="color:var(--lavender);">💬 Skills:</strong> Basic customer service skills. Great at organizing events and enjoys event planning. Loves hanging out with family and friends. Loves LGBT community spaces. Always eager to learn new things to better herself. San Diego local. 📍
+              <br><br>
+              <strong style="color:var(--lavender);">🧠 Neurodivergent Life:</strong> Autistic since childhood. Gets very overstimulated after parties and events — a lot of fun can drain her out afterwards. Only likes crowds if she likes the event. Sometimes needs extra time to comprehend things but is always eager to listen and learn. Was bullied as a child in early elementary school.
+              <br><br>
+              <strong style="color:var(--lavender);">🌿 Wellness & Self Care:</strong> Attends group therapy with people with disabilities and has a 1-on-1 therapist to help with her gender transition and anxiety.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">🎬 Film & Media</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">🍳 Food + Cooking</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🧑🏽‍🤝‍🧑🏽 Random Hangouts</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMILIE -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#4ECDC4,#6A0DAD);"><span>E</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Emilie</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- JACK -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF7A35,#e87cf3);"><span>J</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Jack</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- JENNIFER -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF6B9D,#F7C948);"><span>J</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Jennifer</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- JESS WHATCOTT -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#7B4FFF,#4ECDC4);"><span>J</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Jess Whatcott</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- KATHRYN -->
+        <div class="member-card" data-tags="wellness peersupport neurodivergent art animals advocacy">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#A78BFA,#FF6B9D);"><span>K</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Kathryn</div>
+                <div class="mc-pronouns">they/them</div>
+              </div>
+              <div class="mc-contact">
+                <a href="https://wa.me/16192459303" target="_blank" class="mc-btn">💬 WhatsApp</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Prefers private message via WhatsApp. 💜
+              <br><br>
+              <strong style="color:var(--lavender);">✨ Interests & Special Interests:</strong> Cats, poetry, tarot, supernatural horror movies, meditation & mindfulness, terrariums.
+              <br><br>
+              <strong style="color:var(--lavender);">💬 Can Help With:</strong> Mental health resources.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">✊🏽 Advocacy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KATIE PELON -->
+        <div class="member-card" data-tags="research art wellness sandiego neurodivergent education career animals">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#2AAD9B,#4ECDC4);"><span>K</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Katie Pelon</div>
+                <div class="mc-pronouns">she/her &nbsp;·&nbsp; 33</div>
+              </div>
+              <div class="mc-contact">
+                <a href="mailto:katieleepelon@gmail.com" class="mc-btn">✉️ Email</a>
+                <a href="https://www.tiktok.com/@environerd" target="_blank" class="mc-btn">🎵 TikTok: @environerd</a>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Scientist and PhD student with a passion for the natural world. 🌊
+              <br><br>
+              <strong style="color:var(--lavender);">🔬 Special Interest:</strong> Marine biology.
+              <br><br>
+              <strong style="color:var(--lavender);">🎨 Hobbies:</strong> Drawing, nature photography, junk journaling.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">🎨 Art + Creative</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">💼 Work + Career</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KAYLA -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#F7C948,#2AAD9B);"><span>K</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Kayla</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- MATTHEW -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#2AAD9B,#6A0DAD);"><span>M</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Matthew</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- MEL -->
+        <div class="member-card" data-tags="gaming wellness neurodivergent peersupport education career community animals caregiving hangouts advocacy sandiego">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#e87cf3,#F7C948);"><span>M</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Melissa</div>
+                <div class="mc-pronouns">she/her &nbsp;·&nbsp; Gen X</div>
+              </div>
+              <div class="mc-contact">
+                <span class="mc-btn">💬 Find me on WhatsApp as Mel or Melissa</span>
+              </div>
+            </div>
+            <div class="mc-bio">
+              I'm extremely happy that Lily started this website! It's hard to find people I can feel comfortable around and just unapologetically be myself. This group is my jam! 💜
+              <br><br>
+              <strong style="color:var(--lavender);">💼 Work & Education:</strong> I work full time as a caseworker. I live in North County with my two sons along with two beautiful white cats named Jack and Mamacita.
+              <br><br>
+              <strong style="color:var(--lavender);">✨ Special Interests:</strong> My main special interest and RRB is playing Overwatch (since 2018). I also love crystals and have collected many. I also collect fidgets. My new special interest is reading and learning about autism. In the past, my special interest was building computers.
+              <br><br>
+              <strong style="color:var(--lavender);">🎮 Gaming:</strong> Overwatch, Animal Crossing, Legend of Zelda, and Fortnite (though I haven't played in a while).
+              <br><br>
+              <strong style="color:var(--lavender);">🌿 Leisure:</strong> I enjoy camping, hanging out at the beach, and riding my lavender e-bike, usually in Oceanside, but I'm trying to go out of my comfort zone a little.
+              <br><br>
+              <strong style="color:var(--lavender);">🧠 Neurodivergent Life:</strong> I am late-diagnosed ASD Level 1. I have a hard time socially and tend to misunderstand and am often misunderstood. If I ever say anything that comes off as rude, please let me know so I can rephrase it — unless I meant to be rude, LOL. I get overwhelmed when too many people are talking. I get sensory overload in loud, busy environments, especially if I'm also experiencing sensory overload from allergies, itching, sweating, or stomach issues. I have a lot of allergies and Oral Allergy Syndrome. Due to ASD, I tend to ruminate on injustices and it drives me crazy. I am currently trying to unmask because masking has already caused great harm to me and I've been advised to stop.
+              <br><br>
+              <strong style="color:var(--lavender);">💪 Life Skills:</strong> I live independently and work full time. It's difficult, but doable. I'm great at budgeting and grocery shopping. Not so great at organizing or planning my time. Pretty good at being responsible. Not so good at keeping tidy and I definitely need to learn how to let some of my belongings go.
+              <br><br>
+              <strong style="color:var(--lavender);">🧠 Psychology:</strong> I graduated with a Bachelor's in Psychology from SDSU. I love how the brain works and have studied people my entire life (mostly trying to understand wtf…). I have a background working with teens with behavioral, mental health, and developmental issues.
+              <br><br>
+              <strong style="color:var(--lavender);">✊🏽 Advocacy:</strong> My goal is to become an advocate in the neurodivergent community.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">🌿 Wellness + Self Care</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">💼 Work + Career</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🧑🏽‍🍼 Caregiving/Parenting</span>
+              <span class="mc-tag">🧑🏽‍🤝‍🧑🏽 Random Hangouts</span>
+              <span class="mc-tag">✊🏽 Advocacy</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MICAIAH -->
+        <div class="member-card" data-tags="technology gaming hangouts diy neurodivergent music research animals sandiego">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#4ECDC4,#FF6B9D);"><span>M</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Micaiah</div>
+                <div class="mc-pronouns">she/her &nbsp;·&nbsp; Millennial &nbsp;·&nbsp; 32</div>
+              </div>
+              <div class="mc-contact">
+                <span class="mc-btn">💬 WhatsApp</span>
+              </div>
+            </div>
+            <div class="mc-bio">
+              I'm 32, from a small town in Indiana, but live in the outskirts of San Diego County now. I'm late diagnosed with AuDHD. I have a passion for learning and discovering new skills, and I'm rather literal in thinking and fluent in speaking sarcasm.
+              <br/><br/>
+              I married my amazing husband, Nicholas, on July 20, 2012, when I was 18 and he was 29. His Navy career has taken us through numerous duty days, underways, and three deployments, the last one lasting 11 months during 'The Covid Deployment.' During this time, I was appointed as the Command Ombudsman, a role where I communicated official command information to families, provided resources, alerted the command to family emergencies, and maintained confidentiality in all regards.
+              <br/><br/>
+              My career in Internet technical support deepened my love for technology and online gaming. My problem-solving skills have enabled me to assist friends and family with their tech issues. I also enjoy home improvement projects, having taught myself tasks like wiring smart light switches and installing a gas air fryer stove. I look forward to tackling even bigger projects in the future.
+              <br/><br/>
+              Our home is filled with love for our pets, whom we consider our children. We have three dogs and four cats. Harley Quinn, our 12-year-old German Shepherd Hound mix, is battling cancer but remains full of life. Our Maltese dogs, Pickle and Biscuit, bring joy with their unique personalities. The cats, well, they have their own stories! Feel free to ask.
+              <br/><br/>
+              Currently, my special interests include fidget toys and ESP cards. Getting tattoos and piercings.
+              <br/><br/>
+              I wish I had this information when I first considered my autism diagnosis. Being diagnosed later in life doesn't diminish its impact on prior years. If you're just discovering this about yourself, know that you're not alone. Our community is here to support you. It gets easier, and there's nothing wrong with being different—I hope you find what I have, which is it's actually pretty awesome!
+              <br/><br/>
+              Also, I worked in car insurance for GEICO. I understand insurance really well. There's tons I know I'm missing from here that I'm not remembering, but if you've got a problem, chances are I've been there, helped with it before, or I can figure it out. Just let me know, even if it's not mentioned here. I'll tell you if it's out of my scope.😊
+              <br/><br/>
+              <strong style="color:var(--lavender);">🎬 Movies &amp; TV:</strong> Repo! The Genetic Opera, Frozen, Zombieland Doubletap, Doctor Who, The Illusionist, Fried Green Tomatoes, Orphan Black.
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">💻 Technology</span>
+              <span class="mc-tag">🎮 Gaming</span>
+              <span class="mc-tag">🔧 DIY + Handy Person</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+              <span class="mc-tag">🐾 Animal Knowledge</span>
+              <span class="mc-tag">🧑🏽‍🤝‍🧑🏽 Random Hangouts</span>
+              <span class="mc-tag">🎵 Music</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">📍 San Diego + Local</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RACHEL -->
+        <div class="member-card" data-tags="">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#A78BFA,#2AAD9B);"><span>R</span></div>
+          <div class="mc-info">
+            <div class="mc-top"><div><div class="mc-name">Rachel</div><div class="mc-pronouns">&nbsp;</div></div></div>
+            <div class="mc-tags"></div>
+          </div>
+        </div>
+
+        <!-- SOCORRO -->
+        <div class="member-card" data-tags="advocacy community hangouts education research peersupport neurodivergent">
+          <div class="mc-avatar" style="background:linear-gradient(135deg,#FF7A35,#A78BFA);"><span>S</span></div>
+          <div class="mc-info">
+            <div class="mc-top">
+              <div>
+                <div class="mc-name">Socorro</div>
+                <div class="mc-pronouns">she/her &nbsp;·&nbsp; queer chicana</div>
+              </div>
+              <div class="mc-contact">
+                <span class="mc-btn">💬 WhatsApp</span>
+              </div>
+            </div>
+            <div class="mc-bio">
+              Ph.D. in Education. Queer chicana who loves movie theatres and coloring. Enjoys talking about research, program evaluation, and being a cheerleader to those navigating their educational dreams. 💜
+            </div>
+            <div class="mc-tags">
+              <span class="mc-tag">✊🏽 Advocacy</span>
+              <span class="mc-tag">♾️ Community Building</span>
+              <span class="mc-tag">🧑🏽‍🤝‍🧑🏽 Random Hangouts</span>
+              <span class="mc-tag">🏫 Education</span>
+              <span class="mc-tag">📚 Research + Writing</span>
+              <span class="mc-tag">💬 Peer Support</span>
+              <span class="mc-tag">🧠 Neurodivergent Life</span>
+            </div>
+          </div>
+        </div>        <div id="more-soon" style="background:rgba(255,255,255,.03);border:1.5px dashed rgba(255,255,255,.1);border-radius:var(--radius);padding:1.5rem;text-align:center;color:rgba(255,255,255,.3);font-size:.9rem;">More member profiles coming soon as members opt in. 🌱</div>
+
+      </div>
+    </div><!-- /mem-content -->
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-bottom:.6rem;">
+      <img src="./Logo.png" alt="Actually Autistic SD logo" style="width:64px;height:64px;border-radius:50%;border:1.5px solid rgba(201,149,58,.3);object-fit:cover;"/>
+      <div class="footer-logo">Actually Autistic SD</div>
+    </div>
+    <p class="footer-tag">By autistics, for autistics. Always. 🌈</p>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#story">Our Story</a>
+      <a href="#connect">Join Us</a>
+      <a href="#subscribe">Subscribe</a>
+      <a href="#guidelines">Guidelines</a>
+      <a href="mailto:ActuallyAutisticSD@gmail.com">Email Us</a>
+      <a href="mailto:ActuallyAutisticSD@gmail.com?subject=WhatsApp%20Group%20Inquiry">Join WhatsApp</a>
+      <a href="https://www.instagram.com/actuallyautisticsd" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@actuallyautisticsd" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.facebook.com/profile.php?id=61566241268944" target="_blank" rel="noopener">Facebook</a>
+      <a href="#members-access" style="color:var(--pink);">🔒 Members</a>
+    </div>
+    <p class="footer-note">Peer support community. Not a licensed or professional service of any kind. San Diego, California.</p>
+  </div>
+</footer>
+
+<script>
+  /* Stars */
+  const wrap = document.getElementById('stars');
+  const colors = ['#f7c948','#e87cf3','#7af3e8','#ffffff','#c9a8f0'];
+  for (let i = 0; i < 100; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2 + 0.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};--d:${(Math.random()*4+2).toFixed(1)}s;animation-delay:${(Math.random()*5).toFixed(1)}s`;
+    wrap.appendChild(s);
+  }
+
+  /* Scroll reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* Hamburger */
+  function toggleMenu(btn) {
+    const m = document.getElementById('mobNav');
+    const open = m.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }
+  function closeMenu() {
+    document.getElementById('mobNav').classList.remove('open');
+    document.querySelector('.hamburger').setAttribute('aria-expanded','false');
+  }
+  /* Close mobile menu on outside click */
+  document.addEventListener('click', e => {
+    const m = document.getElementById('mobNav');
+    if (m.classList.contains('open') && !m.contains(e.target) && !e.target.closest('.hamburger')) closeMenu();
+  });
+
+  /* Members — inline show/hide */
+  const MEM_PW = 'AutisticPeers2026!';
+  function checkMembers() {
+    const val = document.getElementById('mem-pw-index').value;
+    if (val === MEM_PW) {
+      document.getElementById('mem-gate').style.display = 'none';
+      document.getElementById('mem-content').style.display = 'block';
+      sessionStorage.setItem('aasd_mem','1');
+    } else {
+      document.getElementById('mem-error-index').style.display = 'block';
+      document.getElementById('mem-pw-index').value = '';
+      document.getElementById('mem-pw-index').focus();
+    }
+  }
+  function lockMembers() {
+    sessionStorage.removeItem('aasd_mem');
+    document.getElementById('mem-content').style.display = 'none';
+    document.getElementById('mem-gate').style.display = 'block';
+    document.getElementById('mem-pw-index').value = '';
+  }
+  if (sessionStorage.getItem('aasd_mem') === '1') {
+    document.getElementById('mem-gate').style.display = 'none';
+    document.getElementById('mem-content').style.display = 'block';
+  }
+  function filterMembers(btn, tag) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.member-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const tags = ' ' + (card.dataset.tags || '') + ' ';
+      if (tag === 'all' || tags.includes(' ' + tag + ' ')) {
+        card.classList.remove('hidden'); visible++;
+      } else { card.classList.add('hidden'); }
+    });
+    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+    document.getElementById('more-soon').style.display = tag === 'all' ? 'block' : 'none';
+  }
+</script>
+</body>
+</html>
